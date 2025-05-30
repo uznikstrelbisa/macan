@@ -125,6 +125,7 @@
         <button data-category="mangalDishes">Блюда на мангале</button>
         <button data-category="companyDishes">Блюда на компанию</button>
         <button data-category="bar">Бар</button>
+        <button data-subcategory="wine">WINE</button>
     </div>
 
     <div id="menu">
@@ -266,6 +267,33 @@
         <ul id="orderList"></ul>
         <button id="clearOrders">Очистить заказы</button>
     </div>
+    <div class="menu-section" data-category="bar" style="display:none;">
+    <h2>Бар</h2>
+
+    <!-- Подкатегории бара -->
+    <div id="barSubcategories">
+        <button data-subcategory="wine">WINE</button>
+        <button data-subcategory="shots">SHOTS</button>
+        <button data-subcategory="beer">BEER</button>
+        <button data-subcategory="liqueurs">LIQUEURS</button>
+        <!-- Добавляй остальные категории по вкусу -->
+    </div>
+
+    <!-- Сюда вставляешь сами подкатегории -->
+    <div class="bar-subcategory" data-subcategory="wine" style="display:none;">
+        <h3>WINE</h3>
+        <ul>
+            <li>EL SANCHES (полусладкое, белое / красное, Испания) <button onclick="addOrder('EL SANCHES')">Заказать</button></li>
+            <li>COMTE ALEXANDRE (полусладкое, белое / красное, Франция) <button onclick="addOrder('COMTE ALEXANDRE')">Заказать</button></li>
+            <li>ASKANELI (Алазанская Долина, полусладкое, белое / красное, Грузия) <button onclick="addOrder('ASKANELI')">Заказать</button></li>
+            <li>MARTINI ASTI 0.75L <button onclick="addOrder('MARTINI ASTI 0.75L')">Заказать</button></li>
+            <li>LAMBRUSCO 0.75L <button onclick="addOrder('LAMBRUSCO 0.75L')">Заказать</button></li>
+            <li>SERENA GRAN CUVEE (белое, сухое, Италия) <button onclick="addOrder('SERENA GRAN CUVEE')">Заказать</button></li>
+        </ul>
+    </div>
+
+    <!-- Здесь позже будут другие подкатегории типа SHOTS, BEER и т.д. -->
+</div>
 
     <script>
         const categoryButtons = document.querySelectorAll('#categoryButtons button');
