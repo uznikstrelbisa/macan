@@ -125,8 +125,28 @@
         <button data-category="mangalDishes">Блюда на мангале</button>
         <button data-category="companyDishes">Блюда на компанию</button>
         <button data-category="bar">Бар</button>
-        <button data-subcategory="wine">WINE</button>
     </div>
+    <!-- Обёртка для подкатегорий бара -->
+<div id="barSubcategoryWrapper" style="display:none;">
+    <div id="barSubcategories">
+        <button data-subcategory="wine">WINE</button>
+        <button data-subcategory="shots">SHOTS</button>
+        <button data-subcategory="beer">BEER</button>
+        <button data-subcategory="liqueurs">LIQUEURS</button>
+    </div>
+
+    <div class="bar-subcategory" data-subcategory="wine" style="display:none;">
+        <h3>WINE</h3>
+        <ul>
+            <li>EL SANCHES (полусладкое, белое / красное, Испания) <button onclick="addOrder('EL SANCHES')">Заказать</button></li>
+            <li>COMTE ALEXANDRE (полусладкое, белое / красное, Франция) <button onclick="addOrder('COMTE ALEXANDRE')">Заказать</button></li>
+            <li>ASKANELI (Алазанская Долина, полусладкое, белое / красное, Грузия) <button onclick="addOrder('ASKANELI')">Заказать</button></li>
+            <li>MARTINI ASTI 0.75L <button onclick="addOrder('MARTINI ASTI 0.75L')">Заказать</button></li>
+            <li>LAMBRUSCO 0.75L <button onclick="addOrder('LAMBRUSCO 0.75L')">Заказать</button></li>
+            <li>SERENA GRAN CUVEE (белое, сухое, Италия) <button onclick="addOrder('SERENA GRAN CUVEE')">Заказать</button></li>
+        </ul>
+    </div>
+</div>
 
     <div id="menu">
 
@@ -295,76 +315,75 @@
     <!-- Здесь позже будут другие подкатегории типа SHOTS, BEER и т.д. -->
 </div>
 
-    <script>
-        const categoryButtons = document.querySelectorAll('#categoryButtons button');
-        const menuSections = document.querySelectorAll('.menu-section');
-        const orderList = document.getElementById('orderList');
-        const clearOrdersBtn = document.getElementById('clearOrders');
+   
+     <script>
+    const categoryButtons = document.querySelectorAll('#categoryButtons button');
+    const sections = document.querySelectorAll('.menu-section');
+    const barWrapper = document.getElementById('barSubcategoryWrapper');
+    const barSubButtons = document.querySelectorAll('#barSubcategories button');
+    const barSubcategories = document.querySelectorAll('.bar-subcategory');
+    const orderList = document.getElementById('orderList');
+    const clearOrdersBtn = document.getElementById('clearOrders');
 
-        // Переключение категорий
-        categoryButtons.forEach(btn => {
-            btn.addEventListener('click', () => {
-                // Активная кнопка
-                categoryButtons.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-
-                const selectedCategory = btn.getAttribute('data-category');
-
-                menuSections.forEach(section => {
-                    if (section.getAttribute('data-category') === selectedCategory) {
-                        section.style.display = 'block';
-                    } else {
-                        section.style.display = 'none';
-                    }
-                });
-            });
-        });
-
-        // Добавление заказа
-        function addOrder(itemName) {
-            const li = document.createElement('li');
-            li.textContent = itemName;
-
-            const removeBtn = document.createElement('button');
-            removeBtn.textContent = 'Удалить';
-            removeBtn.onclick = () => {
-                orderList.removeChild(li);
-            };
-
-            li.appendChild(removeBtn);
-            orderList.appendChild(li);
-        }
-
-        // Очистка заказов
-        clearOrdersBtn.addEventListener('click', () => {
-            orderList.innerHTML = '';
-        });
-    </script>
-    <script>
-    // Обработка клика по кнопке Бар — уже должен работать
-    document.querySelectorAll('#categoryButtons button').forEach(button => {
+    // Обработка категорий
+    categoryButtons.forEach(button => {
         button.addEventListener('click', () => {
-            const category = button.getAttribute('data-category');
-            document.querySelectorAll('.menu-section').forEach(section => {
-                section.style.display = section.getAttribute('data-category') === category ? '' : 'none';
-            });
+            const category = button.dataset.category;
+
+            // Сброс активных
+            categoryButtons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+
+            // Скрытие всех меню
+            sections.forEach(section => section.style.display = 'none');
+            barWrapper.style.display = 'none';
+            barSubcategories.forEach(div => div.style.display = 'none');
+
+            if (category === 'bar') {
+                barWrapper.style.display = 'block';
+            } else {
+                const sectionToShow = document.querySelector(`.menu-section[data-category="${category}"]`);
+                if (sectionToShow) sectionToShow.style.display = 'block';
+            }
         });
     });
 
     // Обработка подкатегорий бара
-    document.querySelectorAll('#barSubcategories button').forEach(button => {
+    barSubButtons.forEach(button => {
         button.addEventListener('click', () => {
-            const subcategory = button.getAttribute('data-subcategory');
-            document.querySelectorAll('.bar-subcategory').forEach(div => {
-                div.style.display = div.getAttribute('data-subcategory') === subcategory ? '' : 'none';
-            });
+            const subcategory = button.dataset.subcategory;
 
-            // Обновление активного класса
-            document.querySelectorAll('#barSubcategories button').forEach(btn => {
-                btn.classList.remove('active');
-            });
+            // Скрыть все
+            barSubcategories.forEach(div => div.style.display = 'none');
+            // Убрать активные
+            barSubButtons.forEach(btn => btn.classList.remove('active'));
+
+            // Показать нужную
+            const subToShow = document.querySelector(`.bar-subcategory[data-subcategory="${subcategory}"]`);
+            if (subToShow) subToShow.style.display = 'block';
+
             button.classList.add('active');
         });
+    });
+
+    // Добавление заказа
+    function addOrder(itemName) {
+        const li = document.createElement('li');
+        li.textContent = itemName;
+
+        const removeBtn = document.createElement('button');
+        removeBtn.textContent = 'Удалить';
+        removeBtn.onclick = () => {
+            orderList.removeChild(li);
+        };
+
+        li.appendChild(removeBtn);
+        orderList.appendChild(li);
+    }
+
+    // Очистка заказов
+    clearOrdersBtn.addEventListener('click', () => {
+        orderList.innerHTML = '';
     });
 </script>
 </body>
