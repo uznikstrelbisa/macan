@@ -133,13 +133,15 @@
         <button data-category="salads" class="active">Салаты</button>
         <button data-category="coldSnacks">Холодные закуски</button>
         <button data-category="hotSnacks">Горячие закуски</button>
-        <button data-category="pizza">Пицца и выпечка</button>
+        <button id="pizzaBakeryBtn" class="active">Пицца и выпечка</button>
         <button data-category="soups">Супы</button>
         <button data-category="garnishes">Гарниры</button>
         <button data-category="hotDishes">Горячие блюда</button>
         <button data-category="mangalDishes">Блюда на мангале</button>
         <button data-category="companyDishes">Блюда на компанию</button>
         <button data-category="bar">Бар</button>
+        <button data-subcategory="sauces">Соусы</button>
+        <button data-subcategory="desserts">Десерты</button>
     </div>
     <!-- Обёртка для подкатегорий бара -->
 <div id="barSubcategoryWrapper" style="display:none;">
@@ -396,13 +398,15 @@
         <div class="menu-section" data-category="pizza" style="display:none;">
             <h2>Пицца и выпечка</h2>
             <ul>
-                <li>Пицца Маргарита <button onclick="addOrder('Пицца Маргарита')">Заказать</button></li>
-                <li>Пицца Пепперони <button onclick="addOrder('Пицца Пепперони')">Заказать</button></li>
-                <li>Пицца 4 сыра <button onclick="addOrder('Пицца 4 сыра')">Заказать</button></li>
-                <li>Пицца с ветчиной и грибами <button onclick="addOrder('Пицца с ветчиной и грибами')">Заказать</button></li>
-                <li>Лаваш с сыром <button onclick="addOrder('Лаваш с сыром')">Заказать</button></li>
-                <li>Лаваш с курицей <button onclick="addOrder('Лаваш с курицей')">Заказать</button></li>
-                <li>Хачапури по-аджарски <button onclick="addOrder('Хачапури по-аджарски')">Заказать</button></li>
+                <li>ФИРМЕННАЯ «ГИПСИ» — салями, ветчина, грибы, яйцо, маслины <button onclick="addOrder('ФИРМЕННАЯ «ГИПСИ»')">Заказать</button></li>
+        <li>ПЕППЕРОНИ — пепперони, халапенью <button onclick="addOrder('ПЕППЕРОНИ')">Заказать</button></li>
+        <li>ЦЕЗАРЬ — куриная грудка, пармезан, черри, руккола, яйцо <button onclick="addOrder('ЦЕЗАРЬ')">Заказать</button></li>
+        <li>4 СЫРА — моцарелла, чеддер, пармезан, дор блю <button onclick="addOrder('4 СЫРА')">Заказать</button></li>
+        <li>МАРГАРИТА — помидоры, сыр <button onclick="addOrder('МАРГАРИТА')">Заказать</button></li>
+        <li>ТЕХАС — говядина BBQ, халапенью, черри <button onclick="addOrder('ТЕХАС')">Заказать</button></li>
+        <li>СЫРНАЯ ЛЕПЕШКА <button onclick="addOrder('СЫРНАЯ ЛЕПЕШКА')">Заказать</button></li>
+        <li>ХАЧАПУРИ ПО-АДЖАРСКИ <button onclick="addOrder('ХАЧАПУРИ ПО-АДЖАРСКИ')">Заказать</button></li>
+        <li>ХЛЕБНАЯ КОРЗИНА <button onclick="addOrder('ХЛЕБНАЯ КОРЗИНА')">Заказать</button></li>
             </ul>
         </div>
         <div class="menu-section" data-category="soups" style="display:none;">
@@ -476,8 +480,27 @@
             <button onclick="addOrder('Cет Light')">Заказать</button>
            </li>
        </ul>
-    </div>    
     </div>
+        <div class="menu-section kitchen-subcategory" data-subcategory="sauces" style="display:none;">
+    <h3>Соусы</h3>
+    <ul>
+        <li>Горчичный <button onclick="addOrder('Горчичный соус')">Заказать</button></li>
+        <li>Грибной <button onclick="addOrder('Грибной соус')">Заказать</button></li>
+        <li>Сливочный <button onclick="addOrder('Сливочный соус')">Заказать</button></li>
+        <li>TAP-TAP <button onclick="addOrder('TAP-TAP соус')">Заказать</button></li>
+        <li>Сальса <button onclick="addOrder('Соус Сальса')">Заказать</button></li>
+    </ul>
+</div>
+<div class="menu-section kitchen-subcategory" data-subcategory="desserts" style="display:none;">
+    <h3>Десерты</h3>
+    <ul>
+        <li>Фруктовая тарелка <button onclick="addOrder('Фруктовая тарелка')">Заказать</button></li>
+        <li>Чизкейк <button onclick="addOrder('Чизкейк')">Заказать</button></li>
+        <li>Мороженое <button onclick="addOrder('Мороженое')">Заказать</button></li>
+        <li>Шоколад в ассортименте <button onclick="addOrder('Шоколад')">Заказать</button></li>
+    </ul>
+</div>
+</div>
 
     <div id="orders">
         <h2>Заказы</h2>
