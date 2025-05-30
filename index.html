@@ -119,6 +119,9 @@
         <button data-category="coldSnacks">Холодные закуски</button>
         <button data-category="hotSnacks">Горячие закуски</button>
         <button data-category="pizza">Пицца и выпечка</button>
+        <button data-category="soups">Супы</button>
+        <button data-category="garnishes">Гарниры</button>
+        <button data-category="hotDishes">Горячие блюда</button>
     </div>
 
     <div id="menu">
@@ -181,11 +184,47 @@
                 <li>Лаваш с сыром <button onclick="addOrder('Лаваш с сыром')">Заказать</button></li>
                 <li>Лаваш с курицей <button onclick="addOrder('Лаваш с курицей')">Заказать</button></li>
                 <li>Хачапури по-аджарски <button onclick="addOrder('Хачапури по-аджарски')">Заказать</button></li>
-                <li>Пирожки с мясом <button onclick="addOrder('Пирожки с мясом')">Заказать</button></li>
-                <li>Пирожки с капустой <button onclick="addOrder('Пирожки с капустой')">Заказать</button></li>
-                <li>Пирожки с картошкой <button onclick="addOrder('Пирожки с картошкой')">Заказать</button></li>
             </ul>
         </div>
+        <div class="menu-section" data-category="soups" style="display:none;">
+        <h2>Супы</h2>
+        <ul>
+            <li>РАМЕН С ГОВЯДИНОЙ <button onclick="addOrder('РАМЕН С ГОВЯДИНОЙ')">Заказать</button></li>
+            <li>ЧЕЧЕВИЧНЫЙ СУП <button onclick="addOrder('ЧЕЧЕВИЧНЫЙ СУП')">Заказать</button></li>
+            <li>СЫРНО-ГРИБНОЙ СУП <button onclick="addOrder('СЫРНО-ГРИБНОЙ СУП')">Заказать</button></li>
+            <li>ЦАРСКАЯ УХА <button onclick="addOrder('ЦАРСКАЯ УХА')">Заказать</button></li>
+        </ul>
+    </div>
+
+    <div class="menu-section" data-category="garnishes" style="display:none;">
+        <h2>Гарниры</h2>
+        <ul>
+            <li>БРОККОЛИ И ЦВЕТНАЯ КАПУСТА В КЛЯРЕ <button onclick="addOrder('БРОККОЛИ И ЦВЕТНАЯ КАПУСТА В КЛЯРЕ')">Заказать</button></li>
+            <li>ОВОЩИ НА ГРИЛЕ <button onclick="addOrder('ОВОЩИ НА ГРИЛЕ')">Заказать</button></li>
+            <li>КАРТОФЕЛЬ ФРИ <button onclick="addOrder('КАРТОФЕЛЬ ФРИ')">Заказать</button></li>
+            <li>КАРТОФЕЛЬНЫЕ ДОЛЬКИ с зеленью и чесноком <button onclick="addOrder('КАРТОФЕЛЬНЫЕ ДОЛЬКИ с зеленью и чесноком')">Заказать</button></li>
+            <li>РИС ПРИПУЩЕННЫЙ <button onclick="addOrder('РИС ПРИПУЩЕННЫЙ')">Заказать</button></li>
+            <li>ЖАРЕНЫЙ КАРТОФЕЛЬ С ГРИБАМИ <button onclick="addOrder('ЖАРЕНЫЙ КАРТОФЕЛЬ С ГРИБАМИ')">Заказать</button></li>
+        </ul>
+    </div>
+
+    <div class="menu-section" data-category="hotDishes" style="display:none;">
+        <h2>Горячие блюда</h2>
+        <ul>
+            <li>МЕДАЛЬОНЫ ИЗ ГОВЯДИНЫ С ОВОЩАМИ И СОУСОМ ТАР-ТАР <button onclick="addOrder('МЕДАЛЬОНЫ ИЗ ГОВЯДИНЫ С ОВОЩАМИ И СОУСОМ ТАР-ТАР')">Заказать</button></li>
+            <li>СУДАК ЖАРЕНЫЙ В ОРЕХОВОМ СОУСЕ <button onclick="addOrder('СУДАК ЖАРЕНЫЙ В ОРЕХОВОМ СОУСЕ')">Заказать</button></li>
+            <li>СЕМГА С ПЛАВЛЕННЫМ СЫРОМ <button onclick="addOrder('СЕМГА С ПЛАВЛЕННЫМ СЫРОМ')">Заказать</button></li>
+            <li>КУРИЦА С ЗАПЕЧЕНЫМ КАРТОФЕЛЕМ И ГРИБНЫМ СОУСОМ <button onclick="addOrder('КУРИЦА С ЗАПЕЧЕНЫМ КАРТОФЕЛЕМ И ГРИБНЫМ СОУСОМ')">Заказать</button></li>
+            <li>ГРУДИНКА BBQ С КАРТОФЕЛЕМ И ОВОЩНЫМ САЛАТОМ <button onclick="addOrder('ГРУДИНКА BBQ С КАРТОФЕЛЕМ И ОВОЩНЫМ САЛАТОМ')">Заказать</button></li>
+            <li>СТЕЙК СЕМГИ СО СЛИВОЧНОМ СОУСОМ И РИСОМ <button onclick="addOrder('СТЕЙК СЕМГИ СО СЛИВОЧНОМ СОУСОМ И РИСОМ')">Заказать</button></li>
+            <li>ГОВЯДИНА ПОД СЛИВОЧНО-СЫРНЫМ СОУСОМ И ГРИБАМИ <button onclick="addOrder('ГОВЯДИНА ПОД СЛИВОЧНО-СЫРНЫМ СОУСОМ И ГРИБАМИ')">Заказать</button></li>
+            <li>БАРАНИНА ПО-ТАЙСКИ С ЗАПЕЧЕННЫМ КАРТОФЕЛЕМ <button onclick="addOrder('БАРАНИНА ПО-ТАЙСКИ С ЗАПЕЧЕННЫМ КАРТОФЕЛЕМ')">Заказать</button></li>
+            <li>АНТРЕКОТ ИЗ ГОВЯДИНЫ С ОВОЩНЫМ ТАР-ТАР <button onclick="addOrder('АНТРЕКОТ ИЗ ГОВЯДИНЫ С ОВОЩНЫМ ТАР-ТАР')">Заказать</button></li>
+            <li>АНТРЕКОТ ИЗ БАРАНИНЫ В ПАНИРОВКЕ С ГРИБНЫМ СОУСОМ И ЗАПЕЧЕННЫМ КАРТОФЕЛЕМ <button onclick="addOrder('АНТРЕКОТ ИЗ БАРАНИНЫ В ПАНИРОВКЕ С ГРИБНЫМ СОУСОМ И ЗАПЕЧЕННЫМ КАРТОФЕЛЕМ')">Заказать</button></li>
+            <li>ФИЛЕ УТКИ ЗАПЕЧЕНАЯ С ЧЕРНОСЛИВОМ И ГРУШЕЙ <button onclick="addOrder('ФИЛЕ УТКИ ЗАПЕЧЕНАЯ С ЧЕРНОСЛИВОМ И ГРУШЕЙ')">Заказать</button></li>
+            <li>НЕЖНЫЕ КУРИНЫЕ МЕДАЛЬОНЫ С ГРИБАМИ И БОЛГАРСКИМ ПЕРЦЕМ <button onclick="addOrder('НЕЖНЫЕ КУРИНЫЕ МЕДАЛЬОНЫ С ГРИБАМИ И БОЛГАРСКИМ ПЕРЦЕМ')">Заказать</button></li>
+        </ul>
+    </div>
     </div>
 
     <div id="orders">
