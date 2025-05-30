@@ -5,6 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.2" />
     <title>Меню Клуба</title>
     <style>
+        #barSubcategories button {
+      background-color: #f0f0f0; /* базовый цвет кнопок */
+      color: #333;
+      border: 1px solid #ccc;
+      padding: 8px 12px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-right: 5px;
+      border-radius: 4px; /* если у тебя у кнопок есть скругления */
+    }
+
+    #barSubcategories button.active {
+      background-color: #333;  /* цвет активной кнопки */
+      color: #fff;
+    }
         body {
             font-family: sans-serif;
             background: #111;
