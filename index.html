@@ -311,5 +311,32 @@
             orderList.innerHTML = '';
         });
     </script>
+    <script>
+    // Обработка клика по кнопке Бар — уже должен работать
+    document.querySelectorAll('#categoryButtons button').forEach(button => {
+        button.addEventListener('click', () => {
+            const category = button.getAttribute('data-category');
+            document.querySelectorAll('.menu-section').forEach(section => {
+                section.style.display = section.getAttribute('data-category') === category ? '' : 'none';
+            });
+        });
+    });
+
+    // Обработка подкатегорий бара
+    document.querySelectorAll('#barSubcategories button').forEach(button => {
+        button.addEventListener('click', () => {
+            const subcategory = button.getAttribute('data-subcategory');
+            document.querySelectorAll('.bar-subcategory').forEach(div => {
+                div.style.display = div.getAttribute('data-subcategory') === subcategory ? '' : 'none';
+            });
+
+            // Обновление активного класса
+            document.querySelectorAll('#barSubcategories button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            button.classList.add('active');
+        });
+    });
+</script>
 </body>
 </html>
