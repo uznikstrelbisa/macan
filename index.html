@@ -122,6 +122,8 @@
         <button data-category="soups">Супы</button>
         <button data-category="garnishes">Гарниры</button>
         <button data-category="hotDishes">Горячие блюда</button>
+        <button data-category="mangalDishes">Блюда на мангале</button>
+        <button data-category="companyDishes">Блюда на компанию</button>
     </div>
 
     <div id="menu">
@@ -223,6 +225,39 @@
             <li>НЕЖНЫЕ КУРИНЫЕ МЕДАЛЬОНЫ С ГРИБАМИ И БОЛГАРСКИМ ПЕРЦЕМ <button onclick="addOrder('НЕЖНЫЕ КУРИНЫЕ МЕДАЛЬОНЫ С ГРИБАМИ И БОЛГАРСКИМ ПЕРЦЕМ')">Заказать</button></li>
         </ul>
     </div>
+    <div class="menu-section" data-category="mangalDishes" style="display:none;">
+        <h2>Блюда на мангале</h2>
+        <ul>
+           <li>Хан-кебаб из говядины с фри <button onclick="addOrder('Хан-кебаб из говядины с фри')">Заказать</button></li>
+           <li>Антрекот из баранины <button onclick="addOrder('Антрекот из баранины')">Заказать</button></li>
+           <li>Люля-кебаб из баранины <button onclick="addOrder('Люля-кебаб из баранины')">Заказать</button></li>
+           <li>Люля-кебаб с сыром <button onclick="addOrder('Люля-кебаб с сыром')">Заказать</button></li>
+           <li>Шашлык из баранины <button onclick="addOrder('Шашлык из баранины')">Заказать</button></li>
+           <li>Шашлык из утки <button onclick="addOrder('Шашлык из утки')">Заказать</button></li>
+           <li>Шашлык из куриных бёдрышек <button onclick="addOrder('Шашлык из куриных бёдрышек')">Заказать</button></li>
+           <li>Шашлык из куриных крыльев <button onclick="addOrder('Шашлык из куриных крыльев')">Заказать</button></li>
+           <li>Шашлык из куриного филе <button onclick="addOrder('Шашлык из куриного филе')">Заказать</button></li>
+           <li>Печень в курдюке <button onclick="addOrder('Печень в курдюке')">Заказать</button></li>
+           <li>Шампиньоны на гриле <button onclick="addOrder('Шампиньоны на гриле')">Заказать</button></li>
+        </ul>
+    </div>
+    <div class="menu-section" data-category="companyDishes" style="display:none;">
+        <h2>Блюда на компанию</h2>
+        <ul>
+           <li>Cет "Meat Grill" (антрекот из говядины, антрекот баранины, грудинка BBQ, медальоны из говядины, филе куриное на гриле, филе утки, куриные крылья, овощи гриль, фри, картофельные дольки, соусы: сливочный, сальса, тар-тар)
+            <button onclick="addOrder('Cет Meat Grill')">Заказать</button>
+           </li>
+            <li>Ассорти шашлыков (шашлык из баранины, утки, куриного филе, крыльев, бёдер, люля-кебаб из баранины и с сыром, печень в курдюке, подаётся с овощами на гриле, картофельными дольками и красным соусом)
+            <button onclick="addOrder('Ассорти шашлыков')">Заказать</button>
+           </li>
+           <li>Ассорти колбасок собственного приготовления (колбаски: говядина, баранина, курица; картофель жареный с грибами, белый соус)
+            <button onclick="addOrder('Ассорти колбасок')">Заказать</button>
+           </li>
+           <li>Cет "Light" (семга на шпажках, судак на гриле, филе куриное, куриные колбаски, овощи гриль, сливочный соус)
+            <button onclick="addOrder('Cет Light')">Заказать</button>
+           </li>
+       </ul>
+    </div>    
     </div>
 
     <div id="orders">
