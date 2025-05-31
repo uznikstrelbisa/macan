@@ -562,7 +562,7 @@
     const barSubcategories = document.querySelectorAll('.bar-subcategory');
     const orderList = document.getElementById('orderList');
     const clearOrdersBtn = document.getElementById('clearOrders');
-
+    
     // Зоны и количество столов
     const zoneTableMap = {
         "Karaoke": 8,
@@ -579,6 +579,10 @@
 
     // Храним заказы по столам: ключ — "Зона стол N", значение — массив строк заказов
     const ordersByTable = {};
+        const savedOrders = localStorage.getItem('ordersByTable');
+if (savedOrders) {
+    Object.assign(ordersByTable, JSON.parse(savedOrders));
+}
 
     // Текущие выбранные зона и стол
     let currentTable = null;
@@ -635,11 +639,13 @@
             ordersByTable[currentTable] = [];
         }
         ordersByTable[currentTable].push(itemName);
-
+        saveOrdersToStorage();
         // Обновляем отображение
         renderOrders();
     }
-
+    function saveOrdersToStorage() {
+    localStorage.setItem('ordersByTable', JSON.stringify(ordersByTable));
+}
     // Отрисовка заказов для текущего стола
     function renderOrders() {
         orderList.innerHTML = '';
@@ -653,6 +659,7 @@
             removeBtn.textContent = 'Удалить';
             removeBtn.onclick = () => {
                 ordersByTable[currentTable].splice(index, 1);
+                saveOrdersToStorage();
                 renderOrders();
             };
 
@@ -665,6 +672,7 @@
     clearOrdersBtn.addEventListener('click', () => {
         if (!currentTable) return;
         ordersByTable[currentTable] = [];
+        saveOrdersToStorage();
         renderOrders();
     });
 
