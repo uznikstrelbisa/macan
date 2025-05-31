@@ -552,9 +552,7 @@
 
     <!-- Здесь позже будут другие подкатегории типа SHOTS, BEER и т.д. -->
 </div>
-
-   
-     <script>
+    <script>
     const categoryButtons = document.querySelectorAll('#categoryButtons button');
     const sections = document.querySelectorAll('.menu-section');
     const barWrapper = document.getElementById('barSubcategoryWrapper');
@@ -562,6 +560,26 @@
     const barSubcategories = document.querySelectorAll('.bar-subcategory');
     const orderList = document.getElementById('orderList');
     const clearOrdersBtn = document.getElementById('clearOrders');
+
+    // Зоны и количество столов
+    const zoneTableMap = {
+        "Karaoke": 8,
+        "VIP3": 1,
+        "Lounge": 3,
+        "VIP2": 1,
+        "4BD": 1,
+        "Club": 15
+    };
+
+    const zoneSelect = document.getElementById('zoneSelect');
+    const tableSelect = document.getElementById('tableSelect');
+    const tableSelectionDiv = document.getElementById('tableSelection');
+
+    // Храним заказы по столам: ключ — "Зона стол N", значение — массив строк заказов
+    const ordersByTable = {};
+
+    // Текущие выбранные зона и стол
+    let currentTable = null;
 
     // Обработка категорий
     categoryButtons.forEach(button => {
@@ -606,56 +624,78 @@
 
     // Добавление заказа
     function addOrder(itemName) {
-        const li = document.createElement('li');
-        li.textContent = itemName;
+        if (!currentTable) {
+            alert('Сначала выберите зону и стол!');
+            return;
+        }
+        // Добавляем заказ в память
+        if (!ordersByTable[currentTable]) {
+            ordersByTable[currentTable] = [];
+        }
+        ordersByTable[currentTable].push(itemName);
 
-        const removeBtn = document.createElement('button');
-        removeBtn.textContent = 'Удалить';
-        removeBtn.onclick = () => {
-            orderList.removeChild(li);
-        };
+        // Обновляем отображение
+        renderOrders();
+    }
 
-        li.appendChild(removeBtn);
-        orderList.appendChild(li);
+    // Отрисовка заказов для текущего стола
+    function renderOrders() {
+        orderList.innerHTML = '';
+        if (!currentTable || !ordersByTable[currentTable]) return;
+
+        ordersByTable[currentTable].forEach((item, index) => {
+            const li = document.createElement('li');
+            li.textContent = item;
+
+            const removeBtn = document.createElement('button');
+            removeBtn.textContent = 'Удалить';
+            removeBtn.onclick = () => {
+                ordersByTable[currentTable].splice(index, 1);
+                renderOrders();
+            };
+
+            li.appendChild(removeBtn);
+            orderList.appendChild(li);
+        });
     }
 
     // Очистка заказов
     clearOrdersBtn.addEventListener('click', () => {
+        if (!currentTable) return;
+        ordersByTable[currentTable] = [];
+        renderOrders();
+    });
+
+    // Когда выбирают зону — подставляем нужное количество столов
+    zoneSelect.addEventListener('change', () => {
+        const selectedZone = zoneSelect.value;
+        const tableCount = zoneTableMap[selectedZone];
+
+        // Показываем выбор стола
+        tableSelectionDiv.style.display = 'block';
+
+        // Очищаем старые опции
+        tableSelect.innerHTML = '<option value="" disabled selected>— выберите стол —</option>';
+
+        // Добавляем новые опции
+        for (let i = 1; i <= tableCount; i++) {
+            const option = document.createElement('option');
+            option.value = `${selectedZone} стол ${i}`;
+            option.textContent = `${selectedZone} — Стол ${i}`;
+            tableSelect.appendChild(option);
+        }
+
+        // Сбрасываем текущий стол и список заказов
+        currentTable = null;
         orderList.innerHTML = '';
     });
-         // Зоны и количество столов
-const zoneTableMap = {
-    "Karaoke": 8,
-    "VIP3": 1,
-    "Lounge": 3,
-    "VIP2": 1,
-    "4BD": 1,
-    "Club": 15
-};
 
-const zoneSelect = document.getElementById('zoneSelect');
-const tableSelect = document.getElementById('tableSelect');
-const tableSelectionDiv = document.getElementById('tableSelection');
+    // При выборе стола показываем его заказы
+    tableSelect.addEventListener('change', () => {
+        currentTable = tableSelect.value;
+        renderOrders();
+    });
 
-// Когда выбирают зону — подставляем нужное количество столов
-zoneSelect.addEventListener('change', () => {
-    const selectedZone = zoneSelect.value;
-    const tableCount = zoneTableMap[selectedZone];
-
-    // Показываем выбор стола
-    tableSelectionDiv.style.display = 'block';
-
-    // Очищаем старые опции
-    tableSelect.innerHTML = '<option value="" disabled selected>— выберите стол —</option>';
-
-    // Добавляем новые опции
-    for (let i = 1; i <= tableCount; i++) {
-        const option = document.createElement('option');
-        option.value = `${selectedZone} стол ${i}`;
-        option.textContent = `${selectedZone} — Стол ${i}`;
-        tableSelect.appendChild(option);
-    }
-});
 </script>
 </body>
 </html>
