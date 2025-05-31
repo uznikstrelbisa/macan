@@ -128,6 +128,24 @@
 </head>
 <body>
     <h1>Меню Клуба</h1>
+    <div id="zoneSelection" style="margin-bottom: 20px;">
+    <label for="zoneSelect"><strong>Выберите зону:</strong></label>
+    <select id="zoneSelect">
+        <option value="" disabled selected>— выберите зону —</option>
+        <option value="Karaoke">Karaoke</option>
+        <option value="VIP3">VIP 3</option>
+        <option value="Lounge">Lounge</option>
+        <option value="VIP2">VIP2</option>
+        <option value="4BD">4BD</option>
+        <option value="Club">Club</option>
+    </select>
+</div>
+    <div id="tableSelection" style="margin-bottom: 20px; display: none;">
+    <label for="tableSelect"><strong>Выберите стол:</strong></label>
+    <select id="tableSelect">
+        <option value="" disabled selected>— выберите стол —</option>
+    </select>
+</div>
 
     <div id="categoryButtons">
         <button data-category="salads" class="active">Салаты</button>
@@ -605,6 +623,39 @@
     clearOrdersBtn.addEventListener('click', () => {
         orderList.innerHTML = '';
     });
+         // Зоны и количество столов
+const zoneTableMap = {
+    "Karaoke": 8,
+    "VIP3": 1,
+    "Lounge": 3,
+    "VIP2": 1,
+    "4BD": 1,
+    "Club": 15
+};
+
+const zoneSelect = document.getElementById('zoneSelect');
+const tableSelect = document.getElementById('tableSelect');
+const tableSelectionDiv = document.getElementById('tableSelection');
+
+// Когда выбирают зону — подставляем нужное количество столов
+zoneSelect.addEventListener('change', () => {
+    const selectedZone = zoneSelect.value;
+    const tableCount = zoneTableMap[selectedZone];
+
+    // Показываем выбор стола
+    tableSelectionDiv.style.display = 'block';
+
+    // Очищаем старые опции
+    tableSelect.innerHTML = '<option value="" disabled selected>— выберите стол —</option>';
+
+    // Добавляем новые опции
+    for (let i = 1; i <= tableCount; i++) {
+        const option = document.createElement('option');
+        option.value = `${selectedZone} стол ${i}`;
+        option.textContent = `${selectedZone} — Стол ${i}`;
+        tableSelect.appendChild(option);
+    }
+});
 </script>
 </body>
 </html>
