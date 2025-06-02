@@ -630,19 +630,27 @@ if (savedOrders) {
 
     // Добавление заказа
     function addOrder(itemName) {
-        if (!currentTable) {
-            alert('Сначала выберите зону и стол!');
-            return;
-        }
-        // Добавляем заказ в память
-        if (!ordersByTable[currentTable]) {
-            ordersByTable[currentTable] = [];
-        }
-        ordersByTable[currentTable].push(itemName);
-        saveOrdersToStorage();
-        // Обновляем отображение
-        renderOrders();
+    if (!currentTable) {
+        alert('Сначала выберите зону и стол!');
+        return;
     }
+
+    const now = new Date();
+    const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+    const order = {
+        name: itemName,
+        time: time
+    };
+
+    if (!ordersByTable[currentTable]) {
+        ordersByTable[currentTable] = [];
+    }
+
+    ordersByTable[currentTable].push(order);
+    saveOrdersToStorage();
+    renderOrders();
+}
     function saveOrdersToStorage() {
     localStorage.setItem('ordersByTable', JSON.stringify(ordersByTable));
 }
