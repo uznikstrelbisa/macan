@@ -656,25 +656,25 @@ if (savedOrders) {
 }
     // Отрисовка заказов для текущего стола
     function renderOrders() {
-        orderList.innerHTML = '';
-        if (!currentTable || !ordersByTable[currentTable]) return;
+    orderList.innerHTML = '';
+    if (!currentTable || !ordersByTable[currentTable]) return;
 
-        ordersByTable[currentTable].forEach((item, index) => {
-            const li = document.createElement('li');
-            li.textContent = item;
+    ordersByTable[currentTable].forEach((order, index) => {
+        const li = document.createElement('li');
+        li.textContent = `${order.name} — ${order.time}`; // ✅ исправлено
 
-            const removeBtn = document.createElement('button');
-            removeBtn.textContent = 'Удалить';
-            removeBtn.onclick = () => {
-                ordersByTable[currentTable].splice(index, 1);
-                saveOrdersToStorage();
-                renderOrders();
-            };
+        const removeBtn = document.createElement('button');
+        removeBtn.textContent = 'Удалить';
+        removeBtn.onclick = () => {
+            ordersByTable[currentTable].splice(index, 1);
+            saveOrdersToStorage();
+            renderOrders();
+        };
 
-            li.appendChild(removeBtn);
-            orderList.appendChild(li);
-        });
-    }
+        li.appendChild(removeBtn);
+        orderList.appendChild(li);
+    });
+}
 
     // Очистка заказов
     clearOrdersBtn.addEventListener('click', () => {
