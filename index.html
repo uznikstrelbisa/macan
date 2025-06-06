@@ -586,6 +586,19 @@ if (savedOrders) {
 
     // Текущие выбранные зона и стол
     let currentTable = null;
+        const orderCounts = {}; // счётчик для стакуемых напитков
+
+const stackableDrinks = [
+  "GLENFIDDICH 12 Y.O.",
+  "JACK DANIEL'S",
+  "TULLAMORE D.E.W. HONEY",
+  "TULLAMORE D.E.W. ORIGINAL",
+  "GRANT'S TRIPLE WOOD",
+  "GRANT'S SUMMER ORANGE",
+  "GRANT'S TROPICAL FIESTA",
+  "СОЛОДОВЫЙ ВИСКИ",
+  "MONKEY SHOULDER"
+];
 
     // Обработка категорий
     categoryButtons.forEach(button => {
@@ -635,19 +648,34 @@ if (savedOrders) {
         return;
     }
 
+    if (!ordersByTable[currentTable]) {
+        ordersByTable[currentTable] = [];
+        orderCounts[currentTable] = {};
+    }
+
     const now = new Date();
     const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-    const order = {
-        name: itemName,
-        time: time
-    };
+    if (stackableDrinks.includes(itemName)) {
+        // если напиток стакуется
+        if (!orderCounts[currentTable][itemName]) {
+            orderCounts[currentTable][itemName] = 0;
+        }
+        orderCounts[currentTable][itemName] += 50; // +50г
 
-    if (!ordersByTable[currentTable]) {
-        ordersByTable[currentTable] = [];
+        // удаляем старую запись с этим напитком
+        ordersByTable[currentTable] = ordersByTable[currentTable].filter(o => o.name !== itemName);
+
+        // добавляем обновлённую
+        ordersByTable[currentTable].push({
+            name: `${orderCounts[currentTable][itemName]}г ${itemName}`,
+            time: time
+        });
+    } else {
+        // обычные напитки/позиции
+        ordersByTable[currentTable].push({ name: itemName, time: time });
     }
 
-    ordersByTable[currentTable].push(order);
     saveOrdersToStorage();
     renderOrders();
 }
@@ -661,12 +689,34 @@ if (savedOrders) {
 
     ordersByTable[currentTable].forEach((order, index) => {
         const li = document.createElement('li');
-        li.textContent = `${order.name} — ${order.time}`; // ✅ исправлено
+        li.textContent = `${order.name} — ${order.time}`;
 
         const removeBtn = document.createElement('button');
         removeBtn.textContent = 'Удалить';
         removeBtn.onclick = () => {
-            ordersByTable[currentTable].splice(index, 1);
+            const drinkMatch = stackableDrinks.find(drink => order.name.includes(drink));
+            if (drinkMatch && orderCounts[currentTable][drinkMatch]) {
+                // уменьшить стак
+                orderCounts[currentTable][drinkMatch] -= 50;
+                if (orderCounts[currentTable][drinkMatch] <= 0) {
+                    delete orderCounts[currentTable][drinkMatch];
+                }
+
+                // обновить запись
+                ordersByTable[currentTable] = ordersByTable[currentTable].filter(o => o.name !== order.name);
+                if (orderCounts[currentTable][drinkMatch]) {
+                    const now = new Date();
+                    const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                    ordersByTable[currentTable].push({
+                        name: `${orderCounts[currentTable][drinkMatch]}г ${drinkMatch}`,
+                        time: time
+                    });
+                }
+            } else {
+                // обычное удаление
+                ordersByTable[currentTable].splice(index, 1);
+            }
+
             saveOrdersToStorage();
             renderOrders();
         };
