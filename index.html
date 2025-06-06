@@ -640,7 +640,11 @@ const stackableDrinks = [
     });
 
     // Добавление заказа
-    function addOrder(itemName) {
+    function cleanName(name) {
+  return name.replace(/\s*\(.*?\)/, '').trim();
+}
+
+function addOrder(itemName) {
     if (!currentTable) {
         alert('Сначала выберите зону и стол!');
         return;
@@ -653,27 +657,25 @@ const stackableDrinks = [
         ordersByTable[currentTable] = [];
     }
 
-    const isStackable = stackableDrinks.includes(itemName);
+    const cleanedItemName = cleanName(itemName);
+    const isStackable = stackableDrinks.some(drink => cleanName(drink) === cleanedItemName);
 
     if (isStackable) {
-        // ищем уже добавленный стакуемый напиток
-        const existingOrder = ordersByTable[currentTable].find(o => o.name.includes(itemName));
+        const existingOrder = ordersByTable[currentTable].find(o => cleanName(o.name) === cleanedItemName);
 
         if (existingOrder) {
-            // прибавляем 50г
             const match = existingOrder.name.match(/(\d+)\s*грамм/);
             const currentGrams = match ? parseInt(match[1]) : 50;
             const newGrams = currentGrams + 50;
-            existingOrder.name = `${newGrams} грамм ${itemName}`;
+            existingOrder.name = `${newGrams} грамм ${cleanedItemName}`;
             existingOrder.time = time;
         } else {
             ordersByTable[currentTable].push({
-                name: `50 грамм ${itemName}`,
+                name: `50 грамм ${cleanedItemName}`,
                 time: time
             });
         }
     } else {
-        // обычный товар
         ordersByTable[currentTable].push({
             name: itemName,
             time: time
