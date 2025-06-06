@@ -700,32 +700,42 @@ function addOrder(itemName) {
         const removeBtn = document.createElement('button');
         removeBtn.textContent = 'Удалить';
         removeBtn.onclick = () => {
-            const drinkMatch = stackableDrinks.find(drink => order.name.includes(drink));
-            if (drinkMatch && orderCounts[currentTable][drinkMatch]) {
-                // уменьшить стак
-                orderCounts[currentTable][drinkMatch] -= 50;
-                if (orderCounts[currentTable][drinkMatch] <= 0) {
-                    delete orderCounts[currentTable][drinkMatch];
-                }
+            const cleanedOrderName = cleanName(order.name);
+            const matchedDrink = stackableDrinks.find(drink => cleanName(drink) === cleanedOrderName);
 
-                // обновить запись
-                ordersByTable[currentTable] = ordersByTable[currentTable].filter(o => o.name !== order.name);
-                if (orderCounts[currentTable][drinkMatch]) {
+            if (matchedDrink) {
+                // Стакуемый напиток
+                if (!orderCounts[currentTable]) orderCounts[currentTable] = {};
+                if (!orderCounts[currentTable][matchedDrink]) orderCounts[currentTable][matchedDrink] = 50;
+                else orderCounts[currentTable][matchedDrink] -= 50;
+
+                // Удаляем текущую запись
+                ordersByTable[currentTable].splice(index, 1);
+
+                // Если осталось > 0 — добавляем обновлённую запись
+                if (orderCounts[currentTable][matchedDrink] > 0) {
                     const now = new Date();
                     const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
                     ordersByTable[currentTable].push({
-                        name: `${orderCounts[currentTable][drinkMatch]}г ${drinkMatch}`,
+                        name: `${orderCounts[currentTable][matchedDrink]} грамм ${cleanedOrderName}`,
                         time: time
                     });
+                } else {
+                    delete orderCounts[currentTable][matchedDrink];
                 }
             } else {
-                // обычное удаление
+                // Нестакуемый напиток — просто удаляем
                 ordersByTable[currentTable].splice(index, 1);
             }
 
             saveOrdersToStorage();
             renderOrders();
         };
+
+        li.appendChild(removeBtn);
+        orderList.appendChild(li);
+    });
+}
 
         li.appendChild(removeBtn);
         orderList.appendChild(li);
