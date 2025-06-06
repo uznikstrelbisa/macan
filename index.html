@@ -638,13 +638,16 @@ const stackableDrinks = [
             button.classList.add('active');
         });
     });
-
-    // Добавление заказа
-    function cleanName(name) {
+        function cleanName(name) {
   return name.replace(/\s*\(.*?\)/, '').trim();
 }
 
-function addOrder(itemName) {
+function cleanStackedName(name) {
+  return name.replace(/^\d+\s*грамм\s*/, '').replace(/\s*\(.*?\)/, '').trim();
+}
+
+    // Добавление заказа
+    function addOrder(itemName) {
     if (!currentTable) {
         alert('Сначала выберите зону и стол!');
         return;
@@ -656,22 +659,33 @@ function addOrder(itemName) {
     if (!ordersByTable[currentTable]) {
         ordersByTable[currentTable] = [];
     }
+    if (!orderCounts[currentTable]) {
+        orderCounts[currentTable] = {};
+    }
 
     const cleanedItemName = cleanName(itemName);
     const isStackable = stackableDrinks.some(drink => cleanName(drink) === cleanedItemName);
 
     if (isStackable) {
-        const existingOrder = ordersByTable[currentTable].find(o => cleanName(o.name) === cleanedItemName);
+        if (!orderCounts[currentTable][cleanedItemName]) {
+            orderCounts[currentTable][cleanedItemName] = 0;
+        }
+        orderCounts[currentTable][cleanedItemName] += 50;
 
-        if (existingOrder) {
-            const match = existingOrder.name.match(/(\d+)\s*грамм/);
-            const currentGrams = match ? parseInt(match[1]) : 50;
-            const newGrams = currentGrams + 50;
-            existingOrder.name = `${newGrams} грамм ${cleanedItemName}`;
-            existingOrder.time = time;
+        const existingOrderIndex = ordersByTable[currentTable].findIndex(
+            o => cleanStackedName(o.name) === cleanedItemName
+        );
+
+        const newName = `${orderCounts[currentTable][cleanedItemName]} грамм ${cleanedItemName}`;
+
+        if (existingOrderIndex !== -1) {
+            ordersByTable[currentTable][existingOrderIndex] = {
+                name: newName,
+                time: time
+            };
         } else {
             ordersByTable[currentTable].push({
-                name: `50 грамм ${cleanedItemName}`,
+                name: newName,
                 time: time
             });
         }
