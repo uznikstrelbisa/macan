@@ -648,32 +648,38 @@ const stackableDrinks = [
         return;
     }
 
-    if (!ordersByTable[currentTable]) {
-        ordersByTable[currentTable] = [];
-        orderCounts[currentTable] = {};
-    }
-
     const now = new Date();
     const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-    if (stackableDrinks.includes(itemName)) {
-        // если напиток стакуется
-        if (!orderCounts[currentTable][itemName]) {
-            orderCounts[currentTable][itemName] = 0;
+    if (!ordersByTable[currentTable]) {
+        ordersByTable[currentTable] = [];
+    }
+
+    const isStackable = stackableDrinks.includes(itemName);
+
+    if (isStackable) {
+        // ищем уже добавленный стакуемый напиток
+        const existingOrder = ordersByTable[currentTable].find(o => o.name.includes(itemName));
+
+        if (existingOrder) {
+            // прибавляем 50г
+            const match = existingOrder.name.match(/(\d+)\s*грамм/);
+            const currentGrams = match ? parseInt(match[1]) : 50;
+            const newGrams = currentGrams + 50;
+            existingOrder.name = `${newGrams} грамм ${itemName}`;
+            existingOrder.time = time;
+        } else {
+            ordersByTable[currentTable].push({
+                name: `50 грамм ${itemName}`,
+                time: time
+            });
         }
-        orderCounts[currentTable][itemName] += 50; // +50г
-
-        // удаляем старую запись с этим напитком
-        ordersByTable[currentTable] = ordersByTable[currentTable].filter(o => o.name !== itemName);
-
-        // добавляем обновлённую
+    } else {
+        // обычный товар
         ordersByTable[currentTable].push({
-            name: `${orderCounts[currentTable][itemName]}г ${itemName}`,
+            name: itemName,
             time: time
         });
-    } else {
-        // обычные напитки/позиции
-        ordersByTable[currentTable].push({ name: itemName, time: time });
     }
 
     saveOrdersToStorage();
